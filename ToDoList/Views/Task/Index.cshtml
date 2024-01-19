@@ -1,3 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model TaskEntity
+@{
+    ViewData["Title"] = "Task Page";
 }
+
+<h4 class="mb-3 text-muted">Создание задачи</h4>
+<form id="createTaskForm">
+    <div class="mb-3">
+        <label class="form-label">Название задачи</label>
+        <input name="name" type="text" class="form-control" />
+    </div>
+    <label class="form-label">Приоритет задачи</label>
+    <select name="priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    <div class="mb-3">
+        <label class="form-label">Описание задачи</label>
+        <textarea name="description" type="text" class="form-control" rows="3"></textarea>
+    </div>
+    <button id="createTask" class="btn btn-primary">Создать</button>
+</form>
