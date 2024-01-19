@@ -10,7 +10,8 @@ namespace ToDoList.Controllers
         }
         public IActionResult Create()
         {
-            return View();
+            //Реализация создания задачи
+            return RedirectToAction("Index", "Task");
         }
     }
 }
