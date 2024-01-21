@@ -22,6 +22,7 @@ namespace ToDoList.Controllers
             {
                 _unitOfWork.Task.Add(obj);
                 _unitOfWork.Save();
+                TempData["success"] = "Задача успешно создана.";
                 return RedirectToAction("Index", "Task");
             }
             return View();

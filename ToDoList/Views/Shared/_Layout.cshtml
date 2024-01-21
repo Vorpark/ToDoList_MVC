@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ToDoList.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 </head>
 <body class="bg-light">
     <header>
@@ -48,6 +49,7 @@
                 </div>
             </div>
             <div class="col-md-8 order-md-1">
+                <partial name="_Notification" />
                 @RenderBody()
             </div>
         </div>
