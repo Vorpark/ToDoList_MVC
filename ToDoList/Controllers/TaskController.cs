@@ -1,17 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
+using ToDoList.DAL.Repository.IRepository;
+using ToDoList.Domain.Entity;
 
 namespace ToDoList.Controllers
 {
     public class TaskController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
+        public TaskController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Create()
+        [HttpPost]
+        public IActionResult Create(TaskEntity obj)
         {
-            //Реализация создания задачи
-            return RedirectToAction("Index", "Task");
+            if(ModelState.IsValid)
+            {
+                _unitOfWork.Task.Add(obj);
+                _unitOfWork.Save();
+                return RedirectToAction("Index", "Task");
+            }
+            return View();
         }
     }
 }
