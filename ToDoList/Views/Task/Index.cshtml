@@ -1,4 +1,4 @@
-﻿@model TaskEntity
+﻿@model TaskVM
 @{
     ViewData["Title"] = "Task Page";
 }
@@ -7,19 +7,28 @@
 <form method="post">
     <div class="mb-3">
         <label class="form-label">Название задачи</label>
-        <input asp-for="Name" type="text" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Task.Name" type="text" class="form-control" />
+        <span asp-validation-for="Task.Name" class="text-danger"></span>
     </div>
     <label class="form-label">Приоритет задачи</label>
-    <select asp-for="Priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    <select asp-for="Task.Priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
     <div class="mb-3">
         <label class="form-label">Описание задачи</label>
-        <textarea asp-for="Description" type="text" class="form-control" rows="3"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+        <textarea asp-for="Task.Description" type="text" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Task.Description" class="text-danger"></span>
     </div>
     <button asp-action="Create" type="submit" class="btn btn-primary form-control">Создать</button>
 </form>
-
+<table id="tblData" class="table table-bordered table-striped mt-4" style="width:150%">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Приоритет</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+</table>
 @section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />
