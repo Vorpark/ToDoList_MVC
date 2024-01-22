@@ -37,11 +37,11 @@
                     <td>@obj.Description</td>
                     <td>@obj.Priority</td>
                     <td>
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                        <div class="w-100 btn-group" role="group">
+                            <a asp-controller="Task" asp-action="Update" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
                                 <i class="bi bi-pencil-square"></i> Обновить
                             </a>
-                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                            <a asp-controller="Task" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
                                 <i class="bi bi-trash"></i> Удалить
                             </a>
                         </div>
@@ -65,7 +65,7 @@
     <br />
     <div class="form-group">
         <label>Заметки для себя</label>
-        <textarea class="form-control" rows="3"></textarea>
+        <textarea class="form-control" rows="8"></textarea>
     </div>
 </div>
 

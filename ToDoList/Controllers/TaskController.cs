@@ -37,6 +37,20 @@ namespace ToDoList.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Update(int? id)
+        {
+            //Реализация обновления задачи
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            //Реализация удаления задачи
+            return View();
+        }
+
         [HttpPost]
         public IActionResult EndDay(TaskVM obj)
         {
