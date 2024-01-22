@@ -3,32 +3,72 @@
     ViewData["Title"] = "Task Page";
 }
 
-<h4 class="mb-3 text-muted">Создание задачи</h4>
-<form method="post">
-    <div class="mb-3">
-        <label class="form-label">Название задачи</label>
-        <input asp-for="Task.Name" type="text" class="form-control" />
-        <span asp-validation-for="Task.Name" class="text-danger"></span>
+<div class="col-md-8 order-md-1">
+    <h4 class="mb-3 text-muted">Создание задачи</h4>
+    <form method="post" asp-controller="Task" asp-action="Create">
+        <div class="mb-3">
+            <label class="form-label">Название задачи</label>
+            <input asp-for="Task.Name" type="text" class="form-control" />
+            <span asp-validation-for="Task.Name" class="text-danger"></span>
+        </div>
+        <label class="form-label">Приоритет задачи</label>
+        <select asp-for="Task.Priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+        <div class="mb-3">
+            <label class="form-label">Описание задачи</label>
+            <textarea asp-for="Task.Description" type="text" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Task.Description" class="text-danger"></span>
+        </div>
+        <button asp-action="Create" type="submit" class="btn btn-primary form-control">Создать</button>
+    </form>
+    <table id="tblData" class="table table-bordered table-striped mt-4" style="width:100%">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Приоритет</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.TaskList)
+            {
+                <tr>
+                    <td>@obj.Name</td>
+                    <td>@obj.Description</td>
+                    <td>@obj.Priority</td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Обновить
+                            </a>
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash"></i> Удалить
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="col-md-4 order-md-2 mb-4">
+    <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Выполненные задачи</span>
+        <span class="badge badge-secondary badge-pill text-muted"></span>
+    </h4>
+    <ul class="list-group mb-3" id="completedListTasks"></ul>
+    <form method="post" asp-controller="Task" asp-action="EndDay">
+        <div class="card col-md-12">
+            <button type="submit" class="btn btn-secondary">Закончить день</button>
+        </div>
+    </form>
+    <br />
+    <div class="form-group">
+        <label>Заметки для себя</label>
+        <textarea class="form-control" rows="3"></textarea>
     </div>
-    <label class="form-label">Приоритет задачи</label>
-    <select asp-for="Task.Priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
-    <div class="mb-3">
-        <label class="form-label">Описание задачи</label>
-        <textarea asp-for="Task.Description" type="text" class="form-control" rows="3"></textarea>
-        <span asp-validation-for="Task.Description" class="text-danger"></span>
-    </div>
-    <button asp-action="Create" type="submit" class="btn btn-primary form-control">Создать</button>
-</form>
-<table id="tblData" class="table table-bordered table-striped mt-4" style="width:150%">
-    <thead>
-        <tr>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Приоритет</th>
-            <th>Действия</th>
-        </tr>
-    </thead>
-</table>
+</div>
+
 @section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />

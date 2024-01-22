@@ -32,29 +32,10 @@
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Выполненные задачи</span>
-                    <span class="badge badge-secondary badge-pill text-muted" id="countOfCompletedTasks"></span>
-                </h4>
-                <ul class="list-group mb-3" id="completedListTasks"></ul>
-                <form>
-                    <div class="card col-md-12">
-                        <button type="submit" class="btn btn-secondary">Закончить день</button>
-                    </div>
-                </form>
-                <br />
-                <div class="form-group">
-                    <label>Заметки для себя</label>
-                    <textarea class="form-control" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="col-md-8 order-md-1">
-                <partial name="_Notification" />
-                @RenderBody()
-            </div>
+            <partial name="_Notification" />
+            @RenderBody()
         </div>
     </div>
 

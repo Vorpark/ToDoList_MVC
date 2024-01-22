@@ -18,12 +18,8 @@ namespace ToDoList.Controllers
         {
             TaskVM taskVM = new()
             {
-                TaskList = _unitOfWork.Task.GetAll().Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }),
-                Task = new TaskEntity()
+                Task = new TaskEntity(),
+                TaskList = _unitOfWork.Task.GetAll()
             };
             return View(taskVM);
         }
@@ -38,6 +34,13 @@ namespace ToDoList.Controllers
                 TempData["success"] = "Задача успешно создана.";
                 return RedirectToAction("Index", "Task");
             }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult EndDay(TaskVM obj)
+        {
+            //Реализация окончания дня
             return View();
         }
     }
