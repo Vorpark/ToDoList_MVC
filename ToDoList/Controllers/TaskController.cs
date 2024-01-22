@@ -38,24 +38,31 @@ namespace ToDoList.Controllers
         }
 
         [HttpGet]
+        public IActionResult Perform(int? id)
+        {
+            //Реализация выполнения задачи
+            return RedirectToAction("Index", "Task");
+        }
+
+        [HttpGet]
         public IActionResult Update(int? id)
         {
             //Реализация обновления задачи
-            return View();
+            return RedirectToAction("Index", "Task");
         }
 
         [HttpGet]
         public IActionResult Delete(int? id)
         {
             //Реализация удаления задачи
-            return View();
+            return RedirectToAction("Index", "Task");
         }
 
         [HttpPost]
         public IActionResult EndDay(TaskVM obj)
         {
             //Реализация окончания дня
-            return View();
+            return RedirectToAction("Index", "Task");
         }
     }
 }
