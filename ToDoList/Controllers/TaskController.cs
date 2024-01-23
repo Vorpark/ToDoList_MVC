@@ -13,6 +13,7 @@ namespace ToDoList.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             IEnumerable<TaskEntity> taskList = _unitOfWork.Task.GetAll().Where(x => x.DayEntityId == null);
@@ -93,7 +94,6 @@ namespace ToDoList.Controllers
                 _unitOfWork.Save();
                 TempData["success"] = "День успешно завершен.";
             }
-
             return RedirectToAction("Index", "Task");
         }
     }

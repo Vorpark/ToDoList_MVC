@@ -22,20 +22,22 @@
         </div>
         <button asp-controller="Task" asp-action="Create" type="submit" class="btn btn-primary form-control">Создать</button>
     </form>
-    <table class="table table-bordered table-striped mt-4" style="width:100%">
-        <thead>
-            <tr>
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Приоритет</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var obj in Model.TaskUnDoneList.OrderByDescending(x => x.Priority))
-            {
+    @if (Model.TaskUnDoneList.Count() != 0)
+    {
+        <table class="table table-bordered table-striped mt-4" style="width:100%">
+            <thead>
                 <tr>
-                    <td>@obj.Name</td>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Приоритет</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.TaskUnDoneList.OrderByDescending(x => x.Priority))
+                {
+                    <tr>
+                        <td>@obj.Name</td>
                     <td>@obj.Description</td>
                     <td>@obj.Priority</td>
                     <td>
@@ -52,12 +54,14 @@
             }
         </tbody>
     </table>
+    }
 </div>
 <div class="col-md-4 order-md-2 mb-4">
     <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-muted">Выполненные задачи</span>
     </h4>
-    <table class="table table-bordered table-striped mt-4" style="width:100%">
+    @if(Model.TaskDoneList.Count() != 0){
+        <table class="table table-bordered table-striped mt-4" style="width:100%">
         <thead>
             <tr>
                 <th>Название</th>
@@ -87,6 +91,7 @@
             <button type="submit" class="btn btn-secondary">Закончить день</button>
         </div>
     </form>
+    }
 </div>
 
 @section Scripts {
