@@ -1,1 +1,27 @@
-﻿
+﻿@model StatisticVM
+@{
+    ViewData["Title"] = "Statistic Page";
+}
+
+<div id="accordion">
+    @foreach (var day in Model.DayList)
+    {
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" aria-expanded="true">
+                        День #@day.DayEntityId
+                    </button>
+                </h5>
+            </div>
+            @foreach(var task in Model.TaskList.Where(x => x.DayEntityId == day.DayEntityId))
+            {
+                <div class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        @task.Name - @task.Description - @task.Priority 
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

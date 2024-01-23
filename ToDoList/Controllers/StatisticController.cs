@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using ToDoList.DAL.Repository.IRepository;
+using ToDoList.Domain.ViewModels;
 
 namespace ToDoList.Controllers
 {
@@ -14,7 +16,14 @@ namespace ToDoList.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var taskList = _unitOfWork.Task.GetAll().Where(x => x.DayEntityId != null);
+            var dayList = _unitOfWork.Day.GetAll();
+            StatisticVM statisticVM = new()
+            {
+                TaskList = taskList,
+                DayList = dayList
+            };
+            return View(statisticVM);
         }
     }
 }
