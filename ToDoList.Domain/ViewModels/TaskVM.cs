@@ -6,6 +6,7 @@ namespace ToDoList.Domain.ViewModels
 {
     public class TaskVM
     {
+        [ValidateNever]
         public TaskEntity Task { get; set; }
 
         [ValidateNever]

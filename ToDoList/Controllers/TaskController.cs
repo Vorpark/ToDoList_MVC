@@ -76,15 +76,25 @@ namespace ToDoList.Controllers
         [HttpPost]
         public IActionResult EndDay(TaskVM obj)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var day = new DayEntity()
-            //    {
-            //        Notes = obj.Day.Notes,
-            //        TaskDoneList = obj.TaskDoneList
-            //    };
-            //}
-            
+            if (ModelState.IsValid)
+            {
+                //Реализация с ошибками
+                var taskList = _unitOfWork.Task.GetAll().Where(x => x.DayEntityId == null).Where(x => x.IsDone == true);
+                var day = new DayEntity()
+                {
+                    Notes = obj.Day.Notes,
+                    TaskList = obj.TaskDoneList 
+                };
+                _unitOfWork.Day.Add(day);
+                foreach (var task in taskList)
+                {
+                    task.DayEntity = day;
+                    _unitOfWork.Task.Update(task);
+                }
+                _unitOfWork.Save();
+                TempData["success"] = "День успешно завершен.";
+            }
+
             return RedirectToAction("Index", "Task");
         }
     }

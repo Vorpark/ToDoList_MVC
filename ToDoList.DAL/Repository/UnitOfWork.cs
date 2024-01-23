@@ -7,10 +7,12 @@ namespace ToDoList.DAL.Repository
     {
         private readonly ApplicationDbContext _db;
         public ITaskRepository Task {  get; private set; }
+        public IDayRepository Day { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Task = new TaskRepository(_db);
+            Day = new DayRepository(_db);
         }
         public void Save()
         {

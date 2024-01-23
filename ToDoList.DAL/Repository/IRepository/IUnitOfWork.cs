@@ -3,6 +3,7 @@
     public interface IUnitOfWork
     {
         ITaskRepository Task {  get; }
+        IDayRepository Day { get; }
         void Save();
     }
 }
