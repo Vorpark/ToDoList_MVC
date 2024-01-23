@@ -15,10 +15,12 @@ namespace ToDoList.Controllers
 
         public IActionResult Index()
         {
+            IEnumerable<TaskEntity> TaskList = _unitOfWork.Task.GetAll();
             TaskVM taskVM = new()
             {
                 Task = new TaskEntity(),
-                TaskList = _unitOfWork.Task.GetAll()
+                TaskUnDoneList = TaskList.Where(x => x.IsDone == false),
+                TaskDoneList = TaskList.Where(x => x.IsDone == true)
             };
             return View(taskVM);
         }
@@ -39,7 +41,18 @@ namespace ToDoList.Controllers
         [HttpGet]
         public IActionResult Perform(int? id)
         {
-            //Реализация выполнения задачи
+            var taskToBePerform = _unitOfWork.Task.Get(x => x.Id == id);
+            taskToBePerform.IsDone = true;
+            if (taskToBePerform != null)
+            {
+                _unitOfWork.Task.Update(taskToBePerform);
+                _unitOfWork.Save();
+                TempData["success"] = "Задача успешно выполнена.";
+            }
+            else
+            {
+                TempData["error"] = "Ошибка во время выполнения задачи.";
+            }
             return RedirectToAction("Index", "Task");
         }
 

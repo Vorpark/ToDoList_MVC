@@ -8,6 +8,8 @@ namespace ToDoList.Domain.ViewModels
     {
         public TaskEntity Task { get; set; }
         [ValidateNever]
-        public IEnumerable<TaskEntity> TaskList { get; set; }
+        public IEnumerable<TaskEntity> TaskUnDoneList { get; set; }
+        [ValidateNever]
+        public IEnumerable<TaskEntity> TaskDoneList { get; set; }
     }
 }
