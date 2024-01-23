@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ToDoList.DAL.Repository.IRepository;
 using ToDoList.Domain.Entity;
 using ToDoList.Domain.ViewModels;
@@ -54,7 +53,17 @@ namespace ToDoList.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            //Реализация удаления задачи
+            var taskToBeDeleted = _unitOfWork.Task.Get(x => x.Id == id);
+            if(taskToBeDeleted != null)
+            {
+                _unitOfWork.Task.Remove(taskToBeDeleted);
+                _unitOfWork.Save();
+                TempData["success"] = "Задача успешно удалена.";
+            }
+            else
+            {
+                TempData["error"] = "Ошибка во время удаления задачи.";
+            }
             return RedirectToAction("Index", "Task");
         }
 
