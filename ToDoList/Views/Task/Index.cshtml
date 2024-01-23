@@ -41,9 +41,6 @@
                             <a asp-controller="Task" asp-action="Perform" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
                                 <i class="bi bi-pencil-square"></i> Выполнить
                             </a>
-                            <a asp-controller="Task" asp-action="Update" asp-route-id="@obj.Id" class="btn btn-secondary mx-2">
-                                <i class="bi bi-pencil-square"></i> Обновить
-                            </a>
                             <a asp-controller="Task" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
                                 <i class="bi bi-trash"></i> Удалить
                             </a>
@@ -76,17 +73,18 @@
             }
         </tbody>
     </table>
-    <ul class="list-group mb-3"></ul>
+    <br />
     <form method="post" asp-controller="Task" asp-action="EndDay">
+        <div class="form-group">
+            <label class="form-label">Заметки</label>
+            <textarea asp-for="Day.Notes" type="text" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Day.Notes" class="text-danger"></span>
+        </div>
+        <br />
         <div class="card col-md-12">
             <button type="submit" class="btn btn-secondary">Закончить день</button>
         </div>
     </form>
-    <br />
-    <div class="form-group">
-        <label>Заметки для себя</label>
-        <textarea class="form-control" rows="8"></textarea>
-    </div>
 </div>
 
 @section Scripts {

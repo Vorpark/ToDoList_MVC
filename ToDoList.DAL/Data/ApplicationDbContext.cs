@@ -6,6 +6,7 @@ namespace ToDoList.DAL.Data
     public class ApplicationDbContext : DbContext
     {
         public DbSet<TaskEntity> Tasks { get; set; }
+        public DbSet<DayEntity> Days { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 

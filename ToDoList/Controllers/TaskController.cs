@@ -15,12 +15,12 @@ namespace ToDoList.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<TaskEntity> TaskList = _unitOfWork.Task.GetAll();
+            IEnumerable<TaskEntity> taskList = _unitOfWork.Task.GetAll().Where(x => x.IsNoActive == false);
             TaskVM taskVM = new()
             {
                 Task = new TaskEntity(),
-                TaskUnDoneList = TaskList.Where(x => x.IsDone == false),
-                TaskDoneList = TaskList.Where(x => x.IsDone == true)
+                TaskUnDoneList = taskList.Where(x => x.IsDone == false),
+                TaskDoneList = taskList.Where(x => x.IsDone == true)
             };
             return View(taskVM);
         }
@@ -57,13 +57,6 @@ namespace ToDoList.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int? id)
-        {
-            //Реализация обновления задачи
-            return RedirectToAction("Index", "Task");
-        }
-
-        [HttpGet]
         public IActionResult Delete(int? id)
         {
             var taskToBeDeleted = _unitOfWork.Task.Get(x => x.Id == id);
@@ -83,7 +76,15 @@ namespace ToDoList.Controllers
         [HttpPost]
         public IActionResult EndDay(TaskVM obj)
         {
-            //Реализация окончания дня
+            //if (ModelState.IsValid)
+            //{
+            //    var day = new DayEntity()
+            //    {
+            //        Notes = obj.Day.Notes,
+            //        TaskDoneList = obj.TaskDoneList
+            //    };
+            //}
+            
             return RedirectToAction("Index", "Task");
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using ToDoList.Domain.Enum;
 
 namespace ToDoList.Domain.Entity
@@ -20,5 +21,8 @@ namespace ToDoList.Domain.Entity
 
         [Required]
         public Priority Priority { get; set; }
+
+        [ValidateNever]
+        public bool IsNoActive { get; set; }
     }
 }
