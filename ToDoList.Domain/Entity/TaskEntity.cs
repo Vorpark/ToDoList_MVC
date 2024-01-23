@@ -18,7 +18,7 @@ namespace ToDoList.Domain.Entity
         public string Description { get; set; }
 
         [Required]
-        public DateTime CreationTime { get; set; } = DateTime.Today;
+        public DateTime CreationTime { get; set; }
 
         [Required]
         public Priority Priority { get; set; }

@@ -30,6 +30,7 @@ namespace ToDoList.Controllers
         {
             if(ModelState.IsValid)
             {
+                obj.Task.CreationTime = DateTime.Now;
                 _unitOfWork.Task.Add(obj.Task);
                 _unitOfWork.Save();
                 TempData["success"] = "Задача успешно создана.";
@@ -78,12 +79,10 @@ namespace ToDoList.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Реализация с ошибками
-                var taskList = _unitOfWork.Task.GetAll().Where(x => x.DayEntityId == null).Where(x => x.IsDone == true);
+                var taskList = _unitOfWork.Task.GetAll().Where(x => x.DayEntityId == null).Where(x => x.IsDone == true).ToList();
                 var day = new DayEntity()
                 {
-                    Notes = obj.Day.Notes,
-                    TaskList = obj.TaskDoneList 
+                    Notes = obj.Day.Notes
                 };
                 _unitOfWork.Day.Add(day);
                 foreach (var task in taskList)

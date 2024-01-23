@@ -10,8 +10,5 @@ namespace ToDoList.Domain.Entity
 
         [Required(ErrorMessage = "Поле не может быть пустым")]
         public string Notes { get; set; }
-
-        [ValidateNever]
-        public IEnumerable<TaskEntity> TaskList { get; set; }
     }
 }
