@@ -12,8 +12,8 @@ using ToDoList.DAL.Data;
 namespace ToDoList.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240119140608_AddTask")]
-    partial class AddTask
+    [Migration("20240123123718_AddTaskEntityAndDayEntity")]
+    partial class AddTaskEntityAndDayEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,16 +25,36 @@ namespace ToDoList.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ToDoList.Domain.Entity.DayEntity", b =>
+                {
+                    b.Property<int>("DayEntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DayEntityId"));
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DayEntityId");
+
+                    b.ToTable("Days");
+                });
+
             modelBuilder.Entity("ToDoList.Domain.Entity.TaskEntity", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("TaskEntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TaskEntityId"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("DayEntityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -50,9 +70,25 @@ namespace ToDoList.DAL.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("TaskEntityId");
+
+                    b.HasIndex("DayEntityId");
 
                     b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Entity.TaskEntity", b =>
+                {
+                    b.HasOne("ToDoList.Domain.Entity.DayEntity", "DayEntity")
+                        .WithMany("TaskList")
+                        .HasForeignKey("DayEntityId");
+
+                    b.Navigation("DayEntity");
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Entity.DayEntity", b =>
+                {
+                    b.Navigation("TaskList");
                 });
 #pragma warning restore 612, 618
         }

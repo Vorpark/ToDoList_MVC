@@ -24,28 +24,28 @@ namespace ToDoList.DAL.Migrations
 
             modelBuilder.Entity("ToDoList.Domain.Entity.DayEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DayEntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DayEntityId"));
 
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("DayEntityId");
 
                     b.ToTable("Days");
                 });
 
             modelBuilder.Entity("ToDoList.Domain.Entity.TaskEntity", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("TaskEntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TaskEntityId"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -60,9 +60,6 @@ namespace ToDoList.DAL.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsNoActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -70,7 +67,7 @@ namespace ToDoList.DAL.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("TaskEntityId");
 
                     b.HasIndex("DayEntityId");
 
@@ -79,14 +76,16 @@ namespace ToDoList.DAL.Migrations
 
             modelBuilder.Entity("ToDoList.Domain.Entity.TaskEntity", b =>
                 {
-                    b.HasOne("ToDoList.Domain.Entity.DayEntity", null)
-                        .WithMany("TaskDoneList")
+                    b.HasOne("ToDoList.Domain.Entity.DayEntity", "DayEntity")
+                        .WithMany("TaskList")
                         .HasForeignKey("DayEntityId");
+
+                    b.Navigation("DayEntity");
                 });
 
             modelBuilder.Entity("ToDoList.Domain.Entity.DayEntity", b =>
                 {
-                    b.Navigation("TaskDoneList");
+                    b.Navigation("TaskList");
                 });
 #pragma warning restore 612, 618
         }

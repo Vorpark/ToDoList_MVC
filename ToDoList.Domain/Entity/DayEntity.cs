@@ -6,12 +6,12 @@ namespace ToDoList.Domain.Entity
 {
     public class DayEntity
     {
-        public int Id { get; set; }
+        public int DayEntityId { get; set; }
 
         [Required(ErrorMessage = "Поле не может быть пустым")]
         public string Notes { get; set; }
 
         [ValidateNever]
-        public IEnumerable<TaskEntity> TaskDoneList { get; set; }
+        public IEnumerable<TaskEntity> TaskList { get; set; }
     }
 }

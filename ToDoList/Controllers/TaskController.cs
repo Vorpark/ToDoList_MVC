@@ -15,7 +15,7 @@ namespace ToDoList.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<TaskEntity> taskList = _unitOfWork.Task.GetAll().Where(x => x.IsNoActive == false);
+            IEnumerable<TaskEntity> taskList = _unitOfWork.Task.GetAll().Where(x => x.DayEntityId == null);
             TaskVM taskVM = new()
             {
                 Task = new TaskEntity(),
@@ -41,7 +41,7 @@ namespace ToDoList.Controllers
         [HttpGet]
         public IActionResult Perform(int? id)
         {
-            var taskToBePerform = _unitOfWork.Task.Get(x => x.Id == id);
+            var taskToBePerform = _unitOfWork.Task.Get(x => x.TaskEntityId == id);
             taskToBePerform.IsDone = true;
             if (taskToBePerform != null)
             {
@@ -59,7 +59,7 @@ namespace ToDoList.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            var taskToBeDeleted = _unitOfWork.Task.Get(x => x.Id == id);
+            var taskToBeDeleted = _unitOfWork.Task.Get(x => x.TaskEntityId == id);
             if(taskToBeDeleted != null)
             {
                 _unitOfWork.Task.Remove(taskToBeDeleted);
