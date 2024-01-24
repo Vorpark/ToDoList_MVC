@@ -9,15 +9,34 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading-@day.DayEntityId">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@day.DayEntityId" aria-expanded="true" aria-controls="collapse-@day.DayEntityId">
-                    Элемент аккордеона @day.DayEntityId
+                    День №@day.DayEntityId
                 </button>
             </h2>
             <div id="collapse-@day.DayEntityId" class="accordion-collapse collapse" aria-labelledby="heading-@day.DayEntityId" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    @foreach (var task in Model.TaskList.Where(x => x.DayEntityId == day.DayEntityId))
+                    @if (Model.TaskList.Where(x => x.DayEntityId == day.DayEntityId).Count() != 0)
                     {
-                        @task.TaskEntityId
+                        <table class="table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Описание</th>
+                                    <th>Приоритет</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var task in Model.TaskList.Where(x => x.DayEntityId == day.DayEntityId))
+                                {
+                                    <tr>
+                                        <td>@task.Name</td>
+                                        <td>@task.Description</td>
+                                        <td>@task.Priority</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     }
+                    <label class="label">Заметки: @Html.Raw(@day.Notes)</label>
                 </div>
             </div>
         </div>
